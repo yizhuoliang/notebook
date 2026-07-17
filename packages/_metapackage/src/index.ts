@@ -6,6 +6,7 @@ import '@jupyter-notebook/documentsearch-extension';
 import '@jupyter-notebook/help-extension';
 import '@jupyter-notebook/lab-extension';
 import '@jupyter-notebook/notebook-extension';
+import '@jupyter-notebook/raybook-extension';
 import '@jupyter-notebook/terminal-extension';
 import '@jupyter-notebook/tree';
 import '@jupyter-notebook/tree-extension';

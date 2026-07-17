@@ -1,0 +1,46 @@
+{
+  "name": "@jupyter-notebook/raybook-extension",
+  "version": "7.7.0-alpha.0",
+  "description": "RayBook distributed cell executor for Jupyter Notebook",
+  "homepage": "https://github.com/yizhuoliang/RayBook",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yizhuoliang/notebook.git"
+  },
+  "license": "BSD-3-Clause",
+  "author": "Project Jupyter and RayBook contributors",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib/"
+  },
+  "files": [
+    "lib/*.d.ts",
+    "lib/*.js.map",
+    "lib/*.js"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "build:prod": "tsc -b",
+    "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
+    "watch": "tsc -b --watch"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "~4.7.0-alpha.0",
+    "@jupyterlab/cells": "~4.7.0-alpha.0",
+    "@jupyterlab/coreutils": "~6.7.0-alpha.0",
+    "@jupyterlab/nbformat": "~4.7.0-alpha.0",
+    "@jupyterlab/notebook": "~4.7.0-alpha.0",
+    "@jupyterlab/services": "~7.7.0-alpha.0"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "~5.9.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "jupyterlab": {
+    "extension": true
+  }
+}

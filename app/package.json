@@ -21,6 +21,7 @@
     "@jupyter-notebook/documentsearch-extension": "~7.7.0-alpha.0",
     "@jupyter-notebook/help-extension": "~7.7.0-alpha.0",
     "@jupyter-notebook/notebook-extension": "~7.7.0-alpha.0",
+    "@jupyter-notebook/raybook-extension": "~7.7.0-alpha.0",
     "@jupyter-notebook/terminal-extension": "~7.7.0-alpha.0",
     "@jupyter-notebook/tree": "~7.7.0-alpha.0",
     "@jupyter-notebook/tree-extension": "~7.7.0-alpha.0",
@@ -136,6 +137,7 @@
     "@jupyter-notebook/documentsearch-extension": "^7.7.0-alpha.0",
     "@jupyter-notebook/help-extension": "^7.7.0-alpha.0",
     "@jupyter-notebook/notebook-extension": "^7.7.0-alpha.0",
+    "@jupyter-notebook/raybook-extension": "^7.7.0-alpha.0",
     "@jupyter-notebook/terminal-extension": "^7.7.0-alpha.0",
     "@jupyter-notebook/tree": "^7.7.0-alpha.0",
     "@jupyter-notebook/tree-extension": "^7.7.0-alpha.0",
@@ -226,6 +228,7 @@
         "@jupyter-notebook/documentsearch-extension": true,
         "@jupyter-notebook/help-extension": true,
         "@jupyter-notebook/notebook-extension": true,
+        "@jupyter-notebook/raybook-extension": true,
         "@jupyter-notebook/terminal-extension": true,
         "@jupyterlab/application-extension": [
           "@jupyterlab/application-extension:context-menu",
@@ -294,7 +297,6 @@
         "@jupyterlab/mathjax-extension": true,
         "@jupyterlab/mermaid-extension": true,
         "@jupyterlab/notebook-extension": [
-          "@jupyterlab/notebook-extension:cell-executor",
           "@jupyterlab/notebook-extension:code-console",
           "@jupyterlab/notebook-extension:export",
           "@jupyterlab/notebook-extension:factory",
