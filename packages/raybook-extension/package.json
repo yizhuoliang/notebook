@@ -9,15 +9,22 @@
   },
   "license": "BSD-3-Clause",
   "author": "Project Jupyter and RayBook contributors",
+  "sideEffects": [
+    "style/**/*.css",
+    "style/index.js"
+  ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "style": "style/index.css",
   "directories": {
     "lib": "lib/"
   },
   "files": [
     "lib/*.d.ts",
     "lib/*.js.map",
-    "lib/*.js"
+    "lib/*.js",
+    "style/**/*.css",
+    "style/index.js"
   ],
   "scripts": {
     "build": "tsc -b",
@@ -31,7 +38,8 @@
     "@jupyterlab/coreutils": "~6.7.0-alpha.0",
     "@jupyterlab/nbformat": "~4.7.0-alpha.0",
     "@jupyterlab/notebook": "~4.7.0-alpha.0",
-    "@jupyterlab/services": "~7.7.0-alpha.0"
+    "@jupyterlab/services": "~7.7.0-alpha.0",
+    "@jupyterlab/translation": "~4.7.0-alpha.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",
@@ -42,5 +50,6 @@
   },
   "jupyterlab": {
     "extension": true
-  }
+  },
+  "styleModule": "style/index.js"
 }

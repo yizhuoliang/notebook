@@ -11,6 +11,7 @@ import {
   type INotebookModel,
 } from '@jupyterlab/notebook';
 import { ServerConnection } from '@jupyterlab/services';
+import { ITranslator } from '@jupyterlab/translation';
 
 interface IRayBookCell {
   index: number;
@@ -31,6 +32,17 @@ interface IPendingExecution {
 }
 
 const pending = new Map<INotebookModel, IPendingExecution[]>();
+
+function applyBranding(translator: ITranslator): void {
+  const logo = document.getElementById('jp-NotebookLogo');
+  if (!logo) {
+    return;
+  }
+  const trans = translator.load('notebook');
+  logo.replaceChildren(document.createTextNode('RayBook'));
+  logo.setAttribute('aria-label', trans.__('RayBook home'));
+  logo.setAttribute('title', trans.__('RayBook home'));
+}
 
 function jsonHeaders(settings: ServerConnection.ISettings): Headers {
   const headers = new Headers(settings.init.headers);
@@ -181,7 +193,12 @@ const plugin: JupyterFrontEndPlugin<INotebookCellExecutor> = {
   description: 'Executes notebook cells through the RayBook server extension.',
   autoStart: true,
   provides: INotebookCellExecutor,
-  activate: (): INotebookCellExecutor => executor,
+  requires: [ITranslator],
+  activate: (app, translator: ITranslator): INotebookCellExecutor => {
+    applyBranding(translator);
+    void app.restored.then(() => applyBranding(translator));
+    return executor;
+  },
 };
 
 export default plugin;

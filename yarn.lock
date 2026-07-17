@@ -2437,6 +2437,7 @@ __metadata:
     "@jupyterlab/nbformat": ~4.7.0-alpha.0
     "@jupyterlab/notebook": ~4.7.0-alpha.0
     "@jupyterlab/services": ~7.7.0-alpha.0
+    "@jupyterlab/translation": ~4.7.0-alpha.0
     rimraf: ^3.0.2
     typescript: ~5.9.3
   languageName: unknown
@@ -4247,7 +4248,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlab/shortcuts-extension@npm:~5.5.0-alpha.0":
+"@jupyterlab/shortcuts-extension@npm:5.5.0-alpha.0":
   version: 5.5.0-alpha.0
   resolution: "@jupyterlab/shortcuts-extension@npm:5.5.0-alpha.0"
   dependencies:
@@ -4268,6 +4269,30 @@ __metadata:
     "@lumino/widgets": ^2.8.0
     react: ^18.2.0
   checksum: a44a51e4269de06f673a7b13d6f470ff6ff3c9b2d0589c1f2d500bc9cea3bcb12aa592be80c31ba210ad77505b3d6695db74d01be6374ef64801ebaf768d9220
+  languageName: node
+  linkType: hard
+
+"@jupyterlab/shortcuts-extension@patch:@jupyterlab/shortcuts-extension@npm%3A5.5.0-alpha.0#./.yarn/patches/@jupyterlab-shortcuts-extension-npm-5.5.0-alpha.0-84d8cd3419.patch::locator=%40jupyter-notebook%2Froot%40workspace%3A.":
+  version: 5.5.0-alpha.0
+  resolution: "@jupyterlab/shortcuts-extension@patch:@jupyterlab/shortcuts-extension@npm%3A5.5.0-alpha.0#./.yarn/patches/@jupyterlab-shortcuts-extension-npm-5.5.0-alpha.0-84d8cd3419.patch::version=5.5.0-alpha.0&hash=6acf4c&locator=%40jupyter-notebook%2Froot%40workspace%3A."
+  dependencies:
+    "@jupyter/react-components": ^0.16.6
+    "@jupyterlab/application": ^4.7.0-alpha.0
+    "@jupyterlab/apputils": ^4.8.0-alpha.0
+    "@jupyterlab/codeeditor": ^4.7.0-alpha.0
+    "@jupyterlab/settingregistry": ^4.7.0-alpha.0
+    "@jupyterlab/translation": ^4.7.0-alpha.0
+    "@jupyterlab/ui-components": ^4.7.0-alpha.0
+    "@lumino/algorithm": ^2.0.4
+    "@lumino/commands": ^2.3.3
+    "@lumino/coreutils": ^2.2.2
+    "@lumino/disposable": ^2.1.5
+    "@lumino/domutils": ^2.0.4
+    "@lumino/keyboard": ^2.0.4
+    "@lumino/signaling": ^2.1.5
+    "@lumino/widgets": ^2.8.0
+    react: ^18.2.0
+  checksum: 59ee432442f152b13011390efece84218c7c45a66b8742405eb2282c39161a8941773ad04a48e246860d21ce45246c9f0ad02b093ec93812fc2e7521e41be240
   languageName: node
   linkType: hard
 

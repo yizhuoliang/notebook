@@ -1,0 +1,59 @@
+/* Flat, minimal RayBook chrome layered over the stock Notebook theme. */
+
+:root {
+  --jp-elevation-z1: none;
+  --jp-elevation-z2: none;
+  --jp-elevation-z4: none;
+  --jp-elevation-z6: none;
+  --jp-elevation-z8: none;
+  --jp-elevation-z12: none;
+  --jp-elevation-z16: none;
+  --jp-elevation-z20: none;
+  --jp-elevation-z24: none;
+  --jp-toolbar-box-shadow: none;
+}
+
+#jp-NotebookLogo {
+  align-items: center;
+  align-self: stretch;
+  color: var(--jp-ui-font-color0);
+  display: flex;
+  font-family: var(--jp-ui-font-family);
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  padding: 0 12px;
+  text-decoration: none;
+}
+
+#jp-NotebookLogo:hover {
+  color: var(--jp-brand-color1);
+  text-decoration: none;
+}
+
+#top-panel-wrapper,
+#menu-panel-wrapper,
+[data-notebook]:not(body[data-notebook='notebooks']) #main-panel,
+.jp-TreePanel > .lm-TabPanel-stackedPanel,
+body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
+  box-shadow: none;
+}
+
+body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
+  border: 1px solid var(--jp-border-color2);
+  border-radius: 8px;
+}
+
+body[data-notebook='notebooks']
+  .jp-Notebook
+  > *:first-child:last-child::before {
+  box-shadow: none;
+}
+
+@media only screen and (max-width: 760px) {
+  body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
+    border-left: 0;
+    border-radius: 0;
+    border-right: 0;
+  }
+}

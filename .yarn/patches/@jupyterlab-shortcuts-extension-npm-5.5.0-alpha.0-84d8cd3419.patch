@@ -1,0 +1,51 @@
+diff --git a/lib/index.js b/lib/index.js
+index bb00b6f35144332bade0f42b03aff267f8978a54..1f860c34d1a8020c09c32b2c4b9d810e27dfc4a1 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -232,13 +232,18 @@ List of keyboard shortcuts:`, commands);
+         registry.pluginChanged.connect(async (_, plugin) => {
+             if (plugin !== shortcuts.id) {
+                 // If the plugin changed its shortcuts, reload everything.
++                const changedPlugin = registry.plugins[plugin];
++                const shortcutsPlugin = registry.plugins[shortcuts.id];
++                if (!changedPlugin || !shortcutsPlugin) {
++                    return;
++                }
+                 const oldShortcuts = loaded[plugin];
+-                const newShortcuts = registry.plugins[plugin].schema['jupyter.lab.shortcuts'] || [];
++                const newShortcuts = changedPlugin.schema['jupyter.lab.shortcuts'] || [];
+                 if (oldShortcuts === undefined ||
+                     !JSONExt.deepEqual(oldShortcuts, newShortcuts)) {
+                     // Empty the default values to avoid shortcut collisions.
+                     canonical = null;
+-                    const schema = registry.plugins[shortcuts.id].schema;
++                    const schema = shortcutsPlugin.schema;
+                     schema.properties.shortcuts.default = cannonicalOverrides;
+                     // Reload the settings.
+                     await registry.load(shortcuts.id, true);
+diff --git a/src/index.ts b/src/index.ts
+index c752ec8adb2642448f3f76014790f1c43e510a55..9f4c7c890f44d5e7b4afb177ace6c8ee4c936e5b 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -296,14 +296,19 @@ List of keyboard shortcuts:`,
+     registry.pluginChanged.connect(async (_, plugin) => {
+       if (plugin !== shortcuts.id) {
+         // If the plugin changed its shortcuts, reload everything.
++        const changedPlugin = registry.plugins[plugin];
++        const shortcutsPlugin = registry.plugins[shortcuts.id];
++        if (!changedPlugin || !shortcutsPlugin) {
++          return;
++        }
+         const oldShortcuts = loaded[plugin];
+         const newShortcuts =
+-          registry.plugins[plugin]!.schema['jupyter.lab.shortcuts'] || [];
++          changedPlugin.schema['jupyter.lab.shortcuts'] || [];
+         if (
+           oldShortcuts === undefined ||
+           !JSONExt.deepEqual(oldShortcuts, newShortcuts)
+         ) {
+           // Empty the default values to avoid shortcut collisions.
+           canonical = null;
+-          const schema = registry.plugins[shortcuts.id]!.schema;
++          const schema = shortcutsPlugin.schema;
+           schema.properties!.shortcuts.default = cannonicalOverrides;
