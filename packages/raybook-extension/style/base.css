@@ -10,6 +10,8 @@
   --jp-elevation-z16: none;
   --jp-elevation-z20: none;
   --jp-elevation-z24: none;
+  --jp-cell-editor-box-shadow: none;
+  --jp-input-box-shadow: none;
   --jp-toolbar-box-shadow: none;
   --jp-border-radius: 7px;
   --jp-private-topbar-height: 36px;
@@ -325,6 +327,12 @@ body[data-notebook='notebooks']
 .jp-Notebook.jp-mod-editMode .jp-Cell.jp-mod-active .jp-InputArea-editor {
   background: var(--rb-code-background);
   border: 1px solid var(--rb-accent);
+  box-shadow: none;
+}
+
+.jp-InputArea-editor.jp-mod-focused,
+.jp-InputArea-editor:focus-within,
+.jp-InputArea-editor .cm-editor.cm-focused {
   box-shadow: none;
 }
 
