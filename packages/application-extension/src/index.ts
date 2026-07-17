@@ -56,8 +56,6 @@ import {
   defaultNotebookPathOpener,
 } from '@jupyter-notebook/application';
 
-import { jupyterIcon } from '@jupyter-notebook/ui-components';
-
 import { SettingConnector } from './settingconnector';
 
 import { PromiseDelegate } from '@lumino/coreutils';
@@ -195,17 +193,9 @@ const logo: JupyterFrontEndPlugin<void> = {
     node.href = `${baseUrl}tree`;
     node.target = '_blank';
     node.rel = 'noopener noreferrer';
+    node.textContent = 'RayBook';
     const logo = new Widget({ node });
 
-    jupyterIcon.element({
-      container: node,
-      elementPosition: 'center',
-      padding: '2px 2px 2px 8px',
-      height: '28px',
-      width: 'auto',
-      cursor: 'pointer',
-      margin: 'auto',
-    });
     logo.id = 'jp-NotebookLogo';
     app.shell.add(logo, 'top', { rank: 0 });
   },

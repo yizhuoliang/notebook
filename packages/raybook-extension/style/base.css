@@ -1,4 +1,4 @@
-/* Flat, minimal RayBook chrome layered over the stock Notebook theme. */
+/* A cohesive, minimal RayBook theme layered over the stock Notebook UI. */
 
 :root {
   --jp-elevation-z1: none;
@@ -11,37 +11,265 @@
   --jp-elevation-z20: none;
   --jp-elevation-z24: none;
   --jp-toolbar-box-shadow: none;
+  --jp-border-radius: 7px;
+  --jp-private-topbar-height: 36px;
+  --jp-private-menubar-height: 36px;
+  --jp-private-menu-item-height: 32px;
+  --jp-private-toolbar-height: 42px;
+  --jp-notebook-max-width: 1080px;
+  --rb-accent: var(--jp-brand-color1);
+  --rb-accent-hover: var(--jp-brand-color0);
+  --rb-accent-soft: color-mix(
+    in srgb,
+    var(--jp-brand-color1) 10%,
+    var(--jp-layout-color1)
+  );
+  --rb-canvas: var(--jp-layout-color2);
+  --rb-code-background: var(--jp-cell-editor-background);
+  --rb-surface: var(--jp-layout-color1);
+  --rb-surface-muted: var(--jp-layout-color2);
+  --rb-border: var(--jp-border-color2);
+  --rb-border-strong: var(--jp-border-color1);
+  --rb-text: var(--jp-ui-font-color0);
+  --rb-muted: var(--jp-ui-font-color2);
+  --rb-hover: color-mix(
+    in srgb,
+    var(--jp-ui-font-color0) 5%,
+    var(--jp-layout-color1)
+  );
+}
+
+body[data-jp-theme-light='true'] {
+  --jp-brand-color0: #1d4ed8;
+  --jp-brand-color1: #2563eb;
+  --jp-brand-color2: #93b4fa;
+  --jp-brand-color3: #dbe7ff;
+  --jp-brand-color4: #eff4ff;
+  --jp-border-color0: #aeb9ca;
+  --jp-border-color1: #cbd5e1;
+  --jp-border-color2: #e2e8f0;
+  --jp-border-color3: #edf1f6;
+  --jp-cell-editor-active-background: #f8fafc;
+  --jp-cell-editor-active-border-color: #2563eb;
+  --jp-cell-editor-background: #f8fafc;
+  --jp-cell-editor-border-color: #e2e8f0;
+  --jp-content-font-color0: #111827;
+  --jp-content-font-color1: #1f2937;
+  --jp-content-font-color2: #64748b;
+  --jp-content-font-color3: #94a3b8;
+  --jp-layout-color0: #ffffff;
+  --jp-layout-color1: #ffffff;
+  --jp-layout-color2: #f4f6f9;
+  --jp-layout-color3: #d8dee8;
+  --jp-layout-color4: #64748b;
+  --jp-ui-font-color0: #111827;
+  --jp-ui-font-color1: #334155;
+  --jp-ui-font-color2: #64748b;
+  --jp-ui-font-color3: #94a3b8;
+  --rb-accent: #2563eb;
+  --rb-accent-hover: #1d4ed8;
+  --rb-accent-soft: #eff4ff;
+  --rb-canvas: #f4f6f9;
+  --rb-code-background: #f8fafc;
+  --rb-surface: #ffffff;
+  --rb-surface-muted: #f8fafc;
+  --rb-border: #e2e8f0;
+  --rb-border-strong: #cbd5e1;
+  --rb-text: #111827;
+  --rb-muted: #64748b;
+  --rb-hover: #f1f5f9;
+}
+
+body.jp-ThemedContainer {
+  background: var(--rb-canvas);
+  color: var(--rb-text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header and global navigation */
+
+#top-panel-wrapper,
+#menu-panel-wrapper {
+  background: var(--rb-surface);
+  border-color: var(--rb-border);
+  box-shadow: none;
+}
+
+#top-panel-wrapper {
+  border-bottom: 0;
+}
+
+#top-panel,
+#menu-panel {
+  box-sizing: border-box;
+  max-width: 1280px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 #jp-NotebookLogo {
   align-items: center;
   align-self: stretch;
-  color: var(--jp-ui-font-color0);
+  color: var(--rb-text);
   display: flex;
   font-family: var(--jp-ui-font-family);
-  font-size: 18px;
-  font-weight: 650;
-  letter-spacing: -0.025em;
-  padding: 0 12px;
+  font-size: 20px;
+  font-weight: 720;
+  letter-spacing: -0.035em;
+  margin-right: 18px;
+  padding: 0 2px;
   text-decoration: none;
 }
 
 #jp-NotebookLogo:hover {
-  color: var(--jp-brand-color1);
+  color: var(--rb-accent);
   text-decoration: none;
 }
 
-#top-panel-wrapper,
-#menu-panel-wrapper,
-[data-notebook]:not(body[data-notebook='notebooks']) #main-panel,
-.jp-TreePanel > .lm-TabPanel-stackedPanel,
-body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
+#jp-title h1 {
+  color: var(--rb-text);
+  font-size: 15px;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  line-height: calc(1.5 * var(--jp-private-topbar-height));
+}
+
+#jp-title h1:hover {
+  background: transparent;
+  color: var(--rb-accent);
+}
+
+.jp-NotebookCheckpoint {
+  color: var(--rb-muted);
+  font-size: 12px;
+  line-height: calc(1.5 * var(--jp-private-topbar-height));
+  margin-left: 10px;
+}
+
+.jp-NotebookTrustedStatus {
+  align-self: center;
+  background: color-mix(in srgb, var(--jp-warn-color1) 10%, var(--rb-surface));
+  border: 1px solid
+    color-mix(in srgb, var(--jp-warn-color1) 28%, var(--rb-border));
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--jp-warn-color1) 72%, var(--rb-text));
+  font-size: 12px;
+  font-weight: 600;
+  height: 24px;
+  margin: 6px 2px;
+  padding: 0 10px;
+}
+
+#menu-panel-wrapper {
+  border-bottom: 1px solid var(--rb-border);
+}
+
+#jp-MainMenu {
+  background: transparent;
+}
+
+#jp-MainMenu .lm-MenuBar-item {
+  border: 0;
+  border-radius: 6px;
+  color: var(--jp-ui-font-color1);
+  font-weight: 500;
+  height: 30px;
+  line-height: 30px;
+  margin: 3px 2px;
+  padding: 0 10px;
+}
+
+#jp-MainMenu .lm-MenuBar-item.lm-mod-active {
+  background: var(--rb-hover);
+  border: 0;
+  box-shadow: none;
+  color: var(--rb-text);
+}
+
+.lm-Menu {
+  background: var(--rb-surface);
+  border: 1px solid var(--rb-border-strong);
+  border-radius: 10px;
+  box-shadow: none;
+  padding: 6px;
+}
+
+.lm-Menu-item {
+  border-radius: 6px;
+  margin: 1px 0;
+}
+
+.lm-Menu-item.lm-mod-active {
+  background: var(--rb-hover);
+}
+
+/* Toolbars and controls */
+
+.jp-Toolbar,
+.jp-NotebookPanel-toolbar {
+  background: var(--rb-surface);
+  border-color: var(--rb-border);
   box-shadow: none;
 }
 
+body[data-notebook='notebooks'] .jp-NotebookPanel-toolbar {
+  min-height: var(--jp-private-toolbar-height);
+  padding-bottom: 4px;
+  padding-top: 4px;
+}
+
+.jp-ToolbarButtonComponent {
+  border-radius: 7px;
+  margin: 2px;
+}
+
+.jp-ToolbarButtonComponent::part(control) {
+  border-radius: 7px;
+  min-height: 28px;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.jp-ToolbarButtonComponent:hover,
+.jp-ToolbarButtonComponent:hover::part(control) {
+  background: var(--rb-hover);
+}
+
+.jp-HTMLSelect.jp-DefaultStyle select,
+.jp-select-wrapper select,
+.jp-NotebookPanel-toolbar select {
+  background: var(--rb-surface);
+  border: 1px solid var(--rb-border);
+  border-radius: 7px;
+  color: var(--jp-ui-font-color1);
+  min-height: 30px;
+}
+
+.jp-HTMLSelect.jp-DefaultStyle select:hover,
+.jp-select-wrapper select:hover,
+.jp-NotebookPanel-toolbar select:hover {
+  border-color: var(--rb-border-strong);
+}
+
+/* Notebook document */
+
+body[data-notebook='notebooks'] .jp-WindowedPanel-outer {
+  background: var(--rb-canvas);
+}
+
+body[data-notebook='notebooks'] .jp-WindowedPanel-inner {
+  margin-bottom: 32px;
+  margin-top: 16px;
+}
+
 body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
-  border: 1px solid var(--jp-border-color2);
-  border-radius: 8px;
+  background: var(--rb-surface);
+  border: 1px solid var(--rb-border);
+  border-radius: 12px;
+  box-shadow: none;
+  padding: 28px 24px 32px;
 }
 
 body[data-notebook='notebooks']
@@ -50,8 +278,394 @@ body[data-notebook='notebooks']
   box-shadow: none;
 }
 
+body[data-notebook='notebooks'] .jp-Notebook-cell {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  margin-bottom: 4px;
+  padding: 9px 10px;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+body[data-notebook='notebooks']
+  .jp-Notebook.jp-mod-commandMode
+  .jp-Cell.jp-mod-active.jp-mod-selected:not(.jp-mod-multiSelected) {
+  background: var(--rb-accent-soft);
+  border-color: color-mix(in srgb, var(--rb-accent) 25%, var(--rb-border));
+}
+
+body[data-notebook='notebooks']
+  .jp-Notebook.jp-mod-commandMode
+  .jp-Cell.jp-mod-active:focus-visible {
+  border: 1px solid var(--rb-accent);
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.jp-Notebook .jp-Cell.jp-mod-active .jp-Collapser {
+  background: var(--rb-accent);
+  border-radius: 999px;
+  margin-bottom: 7px;
+  margin-top: 7px;
+  opacity: 1;
+}
+
+.jp-Notebook .jp-Cell .jp-Collapser:hover,
+.jp-Notebook .jp-Cell.jp-mod-active .jp-Collapser:hover {
+  background: var(--rb-accent-hover);
+  box-shadow: none;
+}
+
+.jp-InputArea-editor {
+  background: var(--rb-code-background);
+  border: 1px solid var(--rb-border);
+  border-radius: 8px;
+}
+
+.jp-Notebook.jp-mod-editMode .jp-Cell.jp-mod-active .jp-InputArea-editor {
+  background: var(--rb-code-background);
+  border: 1px solid var(--rb-accent);
+  box-shadow: none;
+}
+
+.jp-InputArea-editor .cm-editor {
+  background: transparent;
+}
+
+.jp-InputArea-editor .cm-content {
+  padding-bottom: 6px;
+  padding-top: 6px;
+}
+
+.jp-InputArea-editor .cm-line {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.jp-InputPrompt,
+.jp-OutputPrompt {
+  color: var(--rb-muted);
+  font-size: 12px;
+  padding-right: 12px;
+}
+
+.jp-Cell:not(.jp-mod-noOutputs) .jp-Cell-outputWrapper {
+  margin-top: 8px;
+}
+
+.jp-OutputArea-output {
+  color: var(--jp-content-font-color1);
+}
+
+.jp-OutputArea-output pre {
+  line-height: 1.55;
+}
+
+.jp-cell-toolbar {
+  background: var(--rb-surface);
+  border: 1px solid var(--rb-border);
+  border-radius: 8px;
+  box-shadow: none;
+  padding: 2px;
+}
+
+.jp-RenderedHTMLCommon {
+  color: var(--jp-content-font-color1);
+}
+
+.jp-RenderedHTMLCommon h1,
+.jp-RenderedHTMLCommon h2,
+.jp-RenderedHTMLCommon h3 {
+  color: var(--jp-content-font-color0);
+  letter-spacing: -0.025em;
+}
+
+.jp-RenderedHTMLCommon h1 {
+  font-size: 30px;
+  font-weight: 720;
+}
+
+.jp-RenderedHTMLCommon h2 {
+  font-weight: 680;
+}
+
+.jp-RenderedHTMLCommon p {
+  line-height: 1.65;
+}
+
+/* File browser */
+
+[data-notebook]:not(body[data-notebook='notebooks']) #main-panel,
+.jp-TreePanel > .lm-TabPanel-stackedPanel {
+  box-shadow: none;
+}
+
+body:not([data-notebook]) #spacer-widget-top {
+  min-height: 20px;
+}
+
+body:not([data-notebook]) #main-panel {
+  max-width: 1180px;
+}
+
+#main-panel > .jp-TreePanel {
+  box-sizing: border-box;
+  padding: 0 20px 24px;
+}
+
+.jp-TreePanel .lm-TabPanel-tabBar {
+  background: transparent;
+  border: 0;
+  min-height: 42px;
+}
+
+.jp-TreePanel .lm-TabBar-content {
+  align-items: center;
+  gap: 4px;
+}
+
+.jp-TreePanel .lm-TabBar-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--rb-muted);
+  font-weight: 600;
+  height: 34px;
+  margin: 4px 0;
+  padding: 0 12px;
+}
+
+.jp-TreePanel .lm-TabBar-tab::before {
+  display: none;
+}
+
+.jp-TreePanel .lm-TabBar-tab:hover {
+  background: var(--rb-hover);
+  color: var(--rb-text);
+}
+
+.jp-TreePanel .lm-TabBar-tab.lm-mod-current {
+  background: var(--rb-surface);
+  border-color: var(--rb-border);
+  color: var(--rb-text);
+}
+
+.jp-TreePanel > .lm-TabPanel-stackedPanel {
+  background: var(--rb-surface);
+  border: 1px solid var(--rb-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.jp-FileBrowser-toolbar.jp-Toolbar {
+  background: var(--rb-surface);
+  border-bottom: 1px solid var(--rb-border);
+  margin: 0;
+  padding: 10px 12px;
+}
+
+.jp-FileBrowser-toolbar #fileAction-placeholder {
+  display: none;
+}
+
+.jp-FileBrowser-toolbar .jp-Toolbar-item.jp-DropdownMenu,
+.jp-FileBrowser-toolbar .jp-Toolbar-item.jp-ToolbarButton,
+.jp-FileBrowser-toolbar .jp-Toolbar-item.jp-CommandToolbarButton,
+.jp-FileBrowser-toolbar .jp-FileAction {
+  background: transparent;
+  border: 0;
+  border-radius: 7px;
+  margin: 2px;
+  min-height: 30px;
+}
+
+.jp-FileBrowser-toolbar > .jp-Toolbar-item.jp-ToolbarButton:hover,
+.jp-FileBrowser-toolbar > .jp-Toolbar-item.jp-CommandToolbarButton:hover,
+.jp-FileBrowser-toolbar > .jp-Toolbar-item.jp-DropdownMenu:hover,
+.jp-FileBrowser-toolbar .jp-FileAction:hover {
+  background: var(--rb-hover);
+}
+
+.jp-FileBrowser-toolbar .jp-ToolbarButtonComponent {
+  min-height: 30px;
+}
+
+body.jp-ThemedContainer
+  .jp-FileBrowser-toolbar
+  .jp-Toolbar-item.jp-DropdownMenu {
+  align-self: center;
+  background: var(--rb-accent);
+  border: 1px solid var(--rb-accent);
+  color: #ffffff;
+  height: 30px;
+}
+
+.jp-FileBrowser-toolbar .jp-DropdownMenu.lm-MenuBar,
+.jp-FileBrowser-toolbar .jp-DropdownMenu .lm-MenuBar-content {
+  background: transparent;
+  border-radius: 6px;
+}
+
+body.jp-ThemedContainer
+  .jp-FileBrowser-toolbar
+  .jp-Toolbar-item.jp-DropdownMenu:hover {
+  background: var(--rb-accent-hover);
+  border-color: var(--rb-accent-hover);
+}
+
+.jp-FileBrowser-toolbar .jp-DropdownMenu .lm-MenuBar-item {
+  color: #ffffff;
+  font-weight: 600;
+  height: 28px;
+  line-height: 28px;
+}
+
+.jp-FileBrowser-toolbar .jp-DropdownMenu svg path {
+  fill: currentcolor;
+}
+
+.jp-FileBrowser-toolbar > #fileAction-delete {
+  background: transparent;
+}
+
+.jp-FileBrowser-toolbar
+  .jp-ToolbarButtonComponent[data-command='filebrowser:delete'] {
+  background: color-mix(in srgb, var(--jp-error-color1) 9%, var(--rb-surface));
+}
+
+.jp-FileBrowser-toolbar
+  .jp-ToolbarButtonComponent[data-command='filebrowser:delete']
+  .jp-ToolbarButtonComponent-label {
+  color: var(--jp-error-color1);
+}
+
+.jp-BreadCrumbs {
+  background: var(--rb-surface);
+  border-bottom: 1px solid var(--rb-border);
+  margin: 0;
+  padding: 10px 16px;
+}
+
+.jp-BreadCrumbs:hover:not(:has(.jp-BreadCrumbs-content:hover)) {
+  background: var(--rb-surface);
+}
+
+.jp-BreadCrumbs-item {
+  border-radius: 6px;
+  color: var(--rb-muted);
+  padding: 3px 5px;
+}
+
+.jp-BreadCrumbs-item:hover {
+  background: var(--rb-hover);
+  color: var(--rb-text);
+}
+
+.jp-DirListing {
+  --jp-dirlisting-padding-width: 16px;
+}
+
+.jp-DirListing-header {
+  background: var(--rb-surface-muted);
+  border-bottom: 1px solid var(--rb-border);
+  border-top: 0;
+  box-shadow: none;
+  min-height: 38px;
+}
+
+.jp-DirListing-headerItem {
+  color: var(--rb-muted);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  padding-bottom: 9px;
+  padding-top: 9px;
+}
+
+.jp-DirListing-headerItem:hover {
+  background: var(--rb-hover);
+  color: var(--rb-text);
+}
+
+.jp-DirListing-content {
+  background: var(--rb-surface);
+}
+
+.jp-DirListing-item {
+  border-bottom: 1px solid var(--jp-border-color3);
+  min-height: 42px;
+  padding-bottom: 9px;
+  padding-top: 9px;
+}
+
+.jp-DirListing-item:hover:not(.jp-mod-selected) {
+  background: var(--rb-hover);
+}
+
+.jp-DirListing-item.jp-mod-selected {
+  background: var(--rb-accent-soft);
+  color: var(--rb-text);
+}
+
+.jp-DirListing-item.jp-mod-selected mark {
+  color: var(--rb-text);
+}
+
+.jp-DirListing-item.jp-mod-selected .jp-icon-selectable[fill],
+.jp-DirListing-item.jp-mod-selected .jp-icon-selectable-inverse[fill] {
+  fill: var(--rb-accent);
+}
+
+.jp-DirListing-item.jp-mod-running .jp-DirListing-itemIcon::before,
+.jp-DirListing-item.jp-mod-running.jp-mod-selected
+  .jp-DirListing-itemIcon::before {
+  color: var(--jp-success-color1);
+}
+
+.jp-DirListing input[type='checkbox'] {
+  accent-color: var(--rb-accent);
+}
+
 @media only screen and (max-width: 760px) {
+  #top-panel,
+  #menu-panel {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  #jp-NotebookLogo {
+    font-size: 18px;
+    margin-right: 12px;
+  }
+
+  #jp-title h1 {
+    font-size: 14px;
+  }
+
+  body[data-notebook='notebooks'] .jp-WindowedPanel-inner {
+    margin-top: 0;
+  }
+
   body[data-notebook='notebooks'] .jp-WindowedPanel-viewport {
+    border-left: 0;
+    border-radius: 0;
+    border-right: 0;
+    padding: 18px 8px 24px;
+  }
+
+  body[data-notebook='notebooks'] .jp-Notebook-cell {
+    border-radius: 8px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  #main-panel > .jp-TreePanel {
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .jp-TreePanel > .lm-TabPanel-stackedPanel {
     border-left: 0;
     border-radius: 0;
     border-right: 0;
