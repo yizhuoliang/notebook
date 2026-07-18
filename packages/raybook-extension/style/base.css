@@ -257,8 +257,10 @@ body[data-notebook='notebooks'] .jp-NotebookPanel-toolbar {
 
 /* Notebook document */
 
+body[data-notebook='notebooks'],
+body[data-notebook='notebooks'] #main,
 body[data-notebook='notebooks'] .jp-WindowedPanel-outer {
-  background: var(--rb-canvas);
+  background: var(--rb-surface);
 }
 
 body[data-notebook='notebooks'] .jp-WindowedPanel-inner {
