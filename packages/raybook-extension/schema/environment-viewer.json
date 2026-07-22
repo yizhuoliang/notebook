@@ -1,0 +1,10 @@
+{
+  "title": "RayBook environment viewer",
+  "description": "Shows the environment registered for the active notebook.",
+  "jupyter.lab.toolbars": {
+    "Notebook": [{ "name": "raybook-environment", "rank": 11 }]
+  },
+  "properties": {},
+  "additionalProperties": false,
+  "type": "object"
+}

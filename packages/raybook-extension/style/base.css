@@ -239,6 +239,18 @@ body[data-notebook='notebooks'] .jp-NotebookPanel-toolbar {
   background: var(--rb-hover);
 }
 
+.rb-EnvironmentButton .jp-ToolbarButtonComponent {
+  background: var(--rb-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--rb-accent) 20%, var(--rb-border));
+  color: var(--rb-accent);
+  font-weight: 620;
+}
+
+.rb-EnvironmentButton .jp-ToolbarButtonComponent:hover,
+.rb-EnvironmentButton .jp-ToolbarButtonComponent:hover::part(control) {
+  background: color-mix(in srgb, var(--rb-accent) 14%, var(--rb-surface));
+}
+
 .jp-HTMLSelect.jp-DefaultStyle select,
 .jp-select-wrapper select,
 .jp-NotebookPanel-toolbar select {
@@ -253,6 +265,74 @@ body[data-notebook='notebooks'] .jp-NotebookPanel-toolbar {
 .jp-select-wrapper select:hover,
 .jp-NotebookPanel-toolbar select:hover {
   border-color: var(--rb-border-strong);
+}
+
+/* Environment dialog */
+
+.rb-EnvironmentDialog {
+  color: var(--rb-text);
+  min-width: min(620px, 75vw);
+}
+
+.rb-EnvironmentStatus {
+  background: var(--rb-surface-muted);
+  border: 1px solid var(--rb-border);
+  border-radius: 999px;
+  color: var(--rb-muted);
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 650;
+  margin-bottom: 20px;
+  padding: 5px 10px;
+}
+
+.rb-EnvironmentStatus.rb-mod-registered {
+  background: var(--rb-accent-soft);
+  border-color: color-mix(in srgb, var(--rb-accent) 24%, var(--rb-border));
+  color: var(--rb-accent);
+}
+
+.rb-EnvironmentDetails {
+  display: grid;
+  gap: 8px 18px;
+  grid-template-columns: max-content minmax(0, 1fr);
+  margin: 0 0 22px;
+}
+
+.rb-EnvironmentDetails dt {
+  color: var(--rb-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rb-EnvironmentDetails dd {
+  color: var(--rb-text);
+  font-family: var(--jp-code-font-family);
+  font-size: 12px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.rb-EnvironmentSourceLabel {
+  color: var(--rb-text);
+  font-size: 12px;
+  font-weight: 650;
+  margin-bottom: 8px;
+}
+
+.rb-EnvironmentSource {
+  background: var(--rb-code-background);
+  border: 1px solid var(--rb-border);
+  border-radius: 8px;
+  color: var(--jp-content-font-color1);
+  font-family: var(--jp-code-font-family);
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 0;
+  max-height: 360px;
+  overflow: auto;
+  padding: 14px;
+  white-space: pre-wrap;
 }
 
 /* Notebook document */

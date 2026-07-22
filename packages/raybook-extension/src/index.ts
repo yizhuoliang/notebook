@@ -2,6 +2,12 @@
 // Distributed under the terms of the Modified BSD License.
 
 import type { JupyterFrontEndPlugin } from '@jupyterlab/application';
+import {
+  Dialog,
+  IToolbarWidgetRegistry,
+  showDialog,
+  ToolbarButton,
+} from '@jupyterlab/apputils';
 import { CodeCell, MarkdownCell } from '@jupyterlab/cells';
 import type { ICodeCellModel } from '@jupyterlab/cells';
 import { URLExt } from '@jupyterlab/coreutils';
@@ -9,9 +15,11 @@ import type * as nbformat from '@jupyterlab/nbformat';
 import {
   INotebookCellExecutor,
   type INotebookModel,
+  type NotebookPanel,
 } from '@jupyterlab/notebook';
 import { ServerConnection } from '@jupyterlab/services';
-import { ITranslator } from '@jupyterlab/translation';
+import { ITranslator, type TranslationBundle } from '@jupyterlab/translation';
+import { Widget } from '@lumino/widgets';
 
 interface IRayBookCell {
   index: number;
@@ -24,6 +32,16 @@ interface IRayBookCell {
 interface IRayBookResponse {
   status: 'completed' | 'failed';
   cells: IRayBookCell[];
+}
+
+interface IRayBookConfigResponse {
+  registered: boolean;
+  config: string | null;
+  environment: {
+    kind: 'conda' | 'uv' | null;
+    digest: string;
+  };
+  source: string | null;
 }
 
 interface IPendingExecution {
@@ -95,6 +113,103 @@ function applyOutputs(
     }
     code.executionCount = result.execution_count;
     code.executionState = 'idle';
+  }
+}
+
+async function requestEnvironment(
+  path: string
+): Promise<IRayBookConfigResponse> {
+  const settings = ServerConnection.makeSettings();
+  const response = await ServerConnection.makeRequest(
+    URLExt.join(settings.baseUrl, 'raybook/api/v1/config'),
+    {
+      ...settings.init,
+      method: 'POST',
+      headers: jsonHeaders(settings),
+      body: JSON.stringify({ path }),
+    },
+    settings
+  );
+  if (!response.ok) {
+    throw new Error(`Unable to load environment: HTTP ${response.status}`);
+  }
+  return (await response.json()) as IRayBookConfigResponse;
+}
+
+function environmentDialogBody(
+  config: IRayBookConfigResponse,
+  trans: TranslationBundle
+): Widget {
+  const node = document.createElement('div');
+  node.className = 'rb-EnvironmentDialog';
+
+  const status = document.createElement('div');
+  status.className = config.registered
+    ? 'rb-EnvironmentStatus rb-mod-registered'
+    : 'rb-EnvironmentStatus';
+  status.textContent = config.registered
+    ? trans.__('Notebook environment registered')
+    : trans.__('Base environment');
+  node.append(status);
+
+  const details = document.createElement('dl');
+  details.className = 'rb-EnvironmentDetails';
+  const fields: Array<[string, string]> = [
+    [
+      trans.__('Configuration'),
+      config.config ?? trans.__('No sidecar discovered'),
+    ],
+    [
+      trans.__('Provider'),
+      config.environment.kind?.toUpperCase() ?? trans.__('Base'),
+    ],
+    [trans.__('Environment digest'), config.environment.digest],
+  ];
+  for (const [label, value] of fields) {
+    const term = document.createElement('dt');
+    term.textContent = label;
+    const description = document.createElement('dd');
+    description.textContent = value;
+    details.append(term, description);
+  }
+  node.append(details);
+
+  const sourceLabel = document.createElement('div');
+  sourceLabel.className = 'rb-EnvironmentSourceLabel';
+  sourceLabel.textContent = config.registered
+    ? trans.__('Loaded YAML')
+    : trans.__('Environment configuration');
+  node.append(sourceLabel);
+
+  const source = document.createElement('pre');
+  source.className = 'rb-EnvironmentSource';
+  source.textContent =
+    config.source ??
+    trans.__(
+      'No .raybook.yaml sidecar is registered. Cell tasks use the base Ray worker environment.'
+    );
+  node.append(source);
+  return new Widget({ node });
+}
+
+async function showEnvironment(
+  panel: NotebookPanel,
+  trans: TranslationBundle
+): Promise<void> {
+  try {
+    const config = await requestEnvironment(panel.context.path);
+    await showDialog({
+      title: trans.__('RayBook environment'),
+      body: environmentDialogBody(config, trans),
+      buttons: [Dialog.okButton({ label: trans.__('Close') })],
+    });
+  } catch (reason) {
+    const message = reason instanceof Error ? reason.message : String(reason);
+    await showDialog({
+      title: trans.__('Unable to load environment'),
+      body: message,
+      buttons: [Dialog.okButton({ label: trans.__('Close') })],
+    });
   }
 }
 
@@ -188,7 +303,7 @@ const executor: INotebookCellExecutor = {
   },
 };
 
-const plugin: JupyterFrontEndPlugin<INotebookCellExecutor> = {
+const executorPlugin: JupyterFrontEndPlugin<INotebookCellExecutor> = {
   id: '@jupyter-notebook/raybook-extension:cell-executor',
   description: 'Executes notebook cells through the RayBook server extension.',
   autoStart: true,
@@ -201,4 +316,33 @@ const plugin: JupyterFrontEndPlugin<INotebookCellExecutor> = {
   },
 };
 
-export default plugin;
+const environmentPlugin: JupyterFrontEndPlugin<void> = {
+  id: '@jupyter-notebook/raybook-extension:environment-viewer',
+  description: 'Shows the Ray runtime environment registered for a notebook.',
+  autoStart: true,
+  requires: [IToolbarWidgetRegistry, ITranslator],
+  activate: (
+    _app,
+    toolbarRegistry: IToolbarWidgetRegistry,
+    translator: ITranslator
+  ): void => {
+    const trans = translator.load('notebook');
+    toolbarRegistry.addFactory<NotebookPanel>(
+      'Notebook',
+      'raybook-environment',
+      (panel) => {
+        const button = new ToolbarButton({
+          label: trans.__('Environment'),
+          tooltip: trans.__('View the registered RayBook environment'),
+          onClick: () => {
+            void showEnvironment(panel, trans);
+          },
+        });
+        button.addClass('rb-EnvironmentButton');
+        return button;
+      }
+    );
+  },
+};
+
+export default [executorPlugin, environmentPlugin];
